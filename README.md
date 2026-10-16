@@ -26,22 +26,59 @@ A streak is tracked in `localStorage`, and a partial session still counts as a
 day — a streak you can break by having one rough Tuesday stops being motivating
 fast.
 
+### Logging
+
+Each card carries a row of set chips. They come prefilled with last session's
+numbers and **one more on the first set**, because bodyweight work only keeps
+working if it gets harder. The card shows what you did last time and your best.
+
+Timed holds (plank, side plank, hollow body) get a count-up ring instead. Tap
+to start, tap to stop, and the seconds drop straight into the set you just did.
+The ring fills toward the target and turns green past it.
+
+**History** shows a calendar of the last nine weeks plus a per-exercise row:
+most recent sets, a sparkline of your best set per session, and your record.
+
+### The mascot
+
+The stick figure on the start screen picks a different routine every time the
+app opens — jumping jacks, squats, push-ups, running laps, jump rope, sit-ups,
+posing, burpees.
+
 ## Structure
 
 Single self-contained `index.html`. No build step, no dependencies, no
-framework. Fonts come from Google Fonts; everything else is inline.
+framework — it runs from `file://` as happily as from a server. Fonts come from
+Google Fonts; everything else is inline.
 
-Three places to edit:
+Places to edit:
 
-- `F` — the SVG figures, keyed by name, drawn on a `0 0 220 132` viewBox
-- `EX` — the exercise list (name, muscle group, tier, dose, form cue)
-- `RECIPES` — which muscle groups and difficulty tiers each deck size draws from
+- `F` — the SVG card figures, keyed by name, on a `0 0 220 132` viewBox
+- `EX` — the exercise list (name, group, tier, dose, cue, `sets`, `start`, and
+  `timed`/`target` for holds)
+- `RECIPES` — which groups and tiers each deck size draws from
+- `POSE` / `ROUTINES` — the mascot. A pose is 11 joints; a routine is a list of
+  poses with a time on each, and the loop interpolates between them. Adding a
+  routine is adding data, not code.
 
 `tier: 1` is foundational, `tier: 2` is a harder progression. The "Rough day"
 deck only ever draws tier 1.
 
 To add an exercise, add a figure to `F` and an entry to `EX` pointing at it.
 Nothing else needs touching — the deck builder picks from `EX` by group.
+
+### Saved data
+
+One `localStorage` key, `deck-state-v1`:
+
+```
+{ v, streak, last, history: [dates], total,
+  log:  { exerciseId: [ { d: date, v: [sets] } ] },   // last 40 sessions each
+  best: { exerciseId: topSet } }
+```
+
+Older saves without `log`/`best` are migrated in place on load, so a streak
+from an earlier version survives.
 
 ## Deploying
 

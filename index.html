@@ -97,7 +97,28 @@
 
   /* ---------- start screen ---------- */
   .lede{margin-top:16px;color:var(--dim);font-size:15px;line-height:1.5;max-width:30ch}
-  .modes{margin-top:auto;padding-top:36px;display:flex;flex-direction:column;gap:10px}
+  .modes{margin-top:auto;padding-top:24px;display:flex;flex-direction:column;gap:10px}
+
+  /* ---------- mascot ---------- */
+  .mascot-wrap{
+    margin-top:14px;display:flex;flex-direction:column;align-items:center;gap:6px;
+    min-height:150px;justify-content:center;
+  }
+  .mascot{width:100%;max-width:290px;height:auto;display:block;overflow:visible}
+  .m-stroke{fill:none;stroke:var(--chalk);stroke-width:4.2;stroke-linecap:round;stroke-linejoin:round}
+  .m-rope{fill:none;stroke:var(--lilac);stroke-width:2.4;stroke-linecap:round;opacity:.85}
+  .m-ground{stroke:var(--dim);stroke-width:2;opacity:.35;stroke-linecap:round}
+  .mascot-cap{
+    font-family:'JetBrains Mono',monospace;font-size:10.5px;
+    letter-spacing:.13em;color:var(--dim);
+  }
+
+  .footlinks{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:14px}
+  .linkbtn{
+    font-size:11.5px;color:var(--dim);
+    text-decoration:underline;text-underline-offset:3px;
+  }
+  .linkbtn:hover{color:var(--chalk)}
 
   .mode{
     display:flex;align-items:baseline;gap:14px;
@@ -123,7 +144,7 @@
   .pip.done{background:var(--sage)}
   .pip.now{background:var(--lilac)}
 
-  .card-wrap{perspective:1400px;flex:1;min-height:330px;display:flex}
+  .card-wrap{perspective:1400px;flex:1;min-height:430px;display:flex}
   .card{
     position:relative;width:100%;
     transform-style:preserve-3d;
@@ -146,20 +167,88 @@
     font-family:'JetBrains Mono',monospace;font-size:10px;
     letter-spacing:.16em;text-transform:uppercase;color:var(--lilac);
   }
-  figure{flex:1;display:flex;align-items:center;justify-content:center;padding:8px 0}
-  svg.fig{width:100%;max-width:290px;height:auto;display:block}
+  .tag-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .tag-row .hint{
+    font-family:'JetBrains Mono',monospace;font-size:9.5px;
+    letter-spacing:.12em;text-transform:uppercase;color:var(--dim);
+  }
+  .flipzone{cursor:pointer;display:flex;flex-direction:column;flex:1;min-height:0}
+  figure{flex:1;min-height:60px;display:flex;align-items:center;justify-content:center;padding:6px 0}
+  svg.fig{width:100%;max-width:260px;max-height:142px;height:auto;display:block}
   .fig .stroke{fill:none;stroke:var(--chalk);stroke-width:3.4;stroke-linecap:round;stroke-linejoin:round;filter:url(#chalk)}
   .fig .prop{fill:none;stroke:var(--dim);stroke-width:3;stroke-linecap:round;filter:url(#chalk)}
   .fig .ground{stroke:var(--dim);stroke-width:2;stroke-linecap:round;opacity:.55}
   .fig text{fill:var(--lilac);font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700}
 
-  .ex-name{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:29px;letter-spacing:-.03em;line-height:1.02}
-  .dose{font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--dim);margin-top:7px}
-  .flip-hint{margin-top:14px;font-size:12px;color:var(--dim);display:flex;align-items:center;gap:6px}
-  .flip-hint::before{content:'';width:14px;height:1px;background:var(--dim)}
+  .ex-name{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:26px;letter-spacing:-.03em;line-height:1.02}
+  .dose{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--dim);margin-top:6px}
 
   .cue{font-size:19px;line-height:1.45;margin-top:16px;letter-spacing:-.01em}
   .back-note{margin-top:auto;font-size:12.5px;color:var(--dim);line-height:1.5}
+
+  /* ---------- logging ---------- */
+  .lastline{
+    font-family:'JetBrains Mono',monospace;font-size:11px;line-height:1.6;
+    color:var(--dim);margin-top:7px;
+  }
+  .lastline b{color:var(--lilac);font-weight:700}
+  .sets-label{
+    font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--dim);margin-top:14px;
+  }
+  .sets{display:flex;gap:7px;margin-top:7px}
+  .chip{
+    flex:1;display:flex;align-items:center;justify-content:space-between;
+    background:rgba(230,233,242,.05);border:1px solid var(--line);
+    border-radius:11px;padding:3px;
+  }
+  .chip button{
+    width:30px;height:32px;border-radius:8px;flex:none;
+    color:var(--dim);font-size:18px;line-height:1;
+  }
+  .chip button:hover{color:var(--chalk);background:rgba(230,233,242,.08)}
+  .chip b{
+    font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:700;
+    min-width:26px;text-align:center;
+  }
+  .chip.zero b{color:var(--dim);opacity:.5}
+
+  /* ---------- hold timer ---------- */
+  .timer{display:flex;align-items:center;gap:13px;margin-top:12px}
+  .timer-ring{width:72px;height:72px;flex:none;position:relative;padding:0;border-radius:50%}
+  .timer-ring svg{width:100%;height:100%;transform:rotate(-90deg);display:block}
+  .tr-bg{fill:none;stroke:rgba(230,233,242,.1);stroke-width:6}
+  .tr-fg{fill:none;stroke:var(--lilac);stroke-width:6;stroke-linecap:round;transition:stroke .4s ease}
+  .timer-ring.hit .tr-fg{stroke:var(--sage)}
+  .timer-num{
+    position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:700;
+  }
+  .timer-hint{font-size:12.5px;color:var(--dim);line-height:1.5}
+
+  /* ---------- history ---------- */
+  .scroll{flex:1;overflow-y:auto;min-height:0;-webkit-overflow-scrolling:touch;margin-top:4px}
+  .stat-row{display:flex;gap:26px;margin-top:14px}
+  .stat b{
+    display:block;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;
+    font-size:30px;letter-spacing:-.03em;line-height:1;
+  }
+  .stat span{
+    display:block;margin-top:5px;font-family:'JetBrains Mono',monospace;
+    font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);
+  }
+  .cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-top:10px}
+  .cal i{display:block;aspect-ratio:1;border-radius:3px;background:rgba(230,233,242,.07)}
+  .cal i.on{background:var(--sage)}
+  .cal i.future{opacity:.22}
+  .exrow{display:flex;align-items:center;gap:11px;padding:11px 0;border-bottom:1px solid var(--line)}
+  .exrow:last-child{border-bottom:none}
+  .exname{flex:1;font-size:14px;letter-spacing:-.01em;min-width:0}
+  .exlast{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--dim);white-space:nowrap}
+  .exbest{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;color:var(--sage);white-space:nowrap}
+  .spark{width:56px;height:20px;flex:none}
+  .spark path{fill:none;stroke:var(--lilac);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .empty{color:var(--dim);font-size:14px;line-height:1.55;margin-top:20px;max-width:32ch}
 
   .actions{display:flex;gap:10px;margin-top:16px}
   .btn{
@@ -237,38 +326,56 @@ const F = {
 };
 
 /* ============ exercises ============ */
+/* sets/start/target drive the logging chips. `timed` swaps reps for a
+   count-up timer, and `target` is where its ring fills up. */
 const EX = [
   {id:'pushup',fig:'pushup',name:'Push-up',group:'push',tier:1,dose:'3 sets × 8–15',
+   sets:3,start:10,
    cue:'Squeeze your glutes so your hips travel in one line with your shoulders, not ahead of them.'},
   {id:'incline',fig:'incline',name:'Incline push-up',group:'push',tier:1,dose:'3 sets × 10–15',
+   sets:3,start:12,
    cue:'Hands on the couch arm or a countertop — the higher your hands, the easier it gets.'},
   {id:'decline',fig:'decline',name:'Decline push-up',group:'push',tier:2,dose:'3 sets × 6–12',
+   sets:3,start:8,
    cue:'Feet up on the couch shifts the load onto your upper chest and shoulders.'},
   {id:'tempo',fig:'tempo',name:'Tempo push-up',group:'push',tier:2,dose:'3 sets × 5–8',
+   sets:3,start:6,
    cue:'Take three full seconds lowering, pause an inch off the floor, then push up normally.'},
   {id:'archer',fig:'archer',name:'Archer push-up',group:'push',tier:2,dose:'3 sets × 4–8 each side',
+   sets:3,start:5,
    cue:'Slide one arm out straight and let the bent arm do almost all the work.'},
   {id:'row',fig:'row',name:'Ring row',group:'pull',tier:1,dose:'3 sets × 8–12',
+   sets:3,start:10,
    cue:'Walk your feet forward to make it harder, back to make it easier, and pull your elbows past your ribs.'},
   {id:'dbrow',fig:'dbrow',name:'Single-arm row',group:'pull',tier:1,dose:'3 sets × 8–12 each side',
+   sets:3,start:10,
    cue:'Brace a hand on the bench and pull the dumbbell to your hip, not your shoulder.'},
   {id:'pullup',fig:'pullup',name:'Pull-up',group:'pull',tier:2,dose:'4 sets × as many as you get',
+   sets:4,start:3,
    cue:'Start with your shoulders pulled down away from your ears, then drive your elbows to the floor.'},
   {id:'plank',fig:'plank',name:'Plank',group:'core',tier:1,dose:'3 × 30–60 seconds',
+   sets:3,start:40,timed:true,target:60,
    cue:'Tuck your ribs down and your hips under so your lower back flattens out.'},
   {id:'sideplank',fig:'sideplank',name:'Side plank',group:'core',tier:1,dose:'3 × 25–45s each side',
+   sets:3,start:30,timed:true,target:45,
    cue:'Stack your feet and push the bottom shoulder away from the floor to stop it sagging.'},
   {id:'hollow',fig:'hollow',name:'Hollow body hold',group:'core',tier:2,dose:'3 × 20–40 seconds',
+   sets:3,start:25,timed:true,target:40,
    cue:'Press your lower back flat into the floor first, then lower your arms and legs only as far as you can hold it there.'},
   {id:'legraise',fig:'legraise',name:'Lying leg raise',group:'core',tier:2,dose:'3 sets × 8–15',
+   sets:3,start:10,
    cue:'Hands under your hips, and stop lowering the moment your back starts to arch.'},
   {id:'bridge',fig:'bridge',name:'Single-leg glute bridge',group:'legs',tier:1,dose:'3 sets × 8–12 each side',
+   sets:3,start:10,
    cue:'Drive through the heel of the planted foot and hold the top for a full second.'},
   {id:'goblet',fig:'goblet',name:'Goblet squat',group:'legs',tier:1,dose:'3 sets × 10–15',
+   sets:3,start:12,
    cue:'Hold the weight at your chest and let it counterbalance you as you sit straight down.'},
   {id:'splitsquat',fig:'splitsquat',name:'Bulgarian split squat',group:'legs',tier:2,dose:'3 sets × 6–10 each side',
+   sets:3,start:8,
    cue:'Rear foot on the couch, front foot far enough forward that your knee stays over your ankle.'}
 ];
+const byId = id => EX.find(e => e.id === id);
 
 const RECIPES = {
   full:{cards:['push','pull','legs','core','push','core'],tiers:[1,2],label:'Full deck'},
@@ -276,10 +383,184 @@ const RECIPES = {
   one:{cards:['push'],tiers:[1],label:'One card'}
 };
 
+/* ============================================================
+   The mascot — the figure larking about on the start screen.
+
+   A routine is a list of poses with a time on each. The loop lerps
+   between the surrounding two and redraws. Adding a routine is
+   adding data, not code.
+
+   Joints, all [x,y] in the 240x150 viewBox (ground at y=132):
+     hd head · sh shoulders · hp hips
+     el/ha left elbow/hand · er/hr right elbow/hand
+     kl/fl left knee/foot  · kr/fr right knee/foot
+   ============================================================ */
+const POSE = {
+  stand:{hd:[120,36],sh:[120,56],hp:[120,92],el:[104,74],ha:[101,95],er:[136,74],hr:[139,95],
+         kl:[112,112],fl:[109,131],kr:[128,112],fr:[131,131]},
+
+  jacksOpen:{hd:[120,32],sh:[120,52],hp:[120,88],el:[96,36],ha:[82,16],er:[144,36],hr:[158,16],
+             kl:[100,108],fl:[88,127],kr:[140,108],fr:[152,127]},
+  jacksShut:{hd:[120,38],sh:[120,58],hp:[120,94],el:[106,78],ha:[108,98],er:[134,78],hr:[132,98],
+             kl:[118,113],fl:[117,131],kr:[122,113],fr:[123,131]},
+
+  squatUp:{hd:[120,36],sh:[120,56],hp:[120,92],el:[102,72],ha:[108,90],er:[138,72],hr:[132,90],
+           kl:[112,112],fl:[109,131],kr:[128,112],fr:[131,131]},
+  squatDown:{hd:[118,60],sh:[118,80],hp:[116,108],el:[98,86],ha:[80,84],er:[138,86],hr:[156,84],
+             kl:[100,116],fl:[108,131],kr:[132,116],fr:[126,131]},
+
+  pushUp:{hd:[54,72],sh:[76,80],hp:[130,90],el:[74,104],ha:[70,131],er:[82,102],hr:[78,131],
+          kl:[164,100],fl:[188,128],kr:[168,103],fr:[192,130]},
+  pushDown:{hd:[50,92],sh:[76,98],hp:[130,100],el:[58,116],ha:[70,131],er:[94,116],hr:[78,131],
+            kl:[164,104],fl:[188,129],kr:[168,106],fr:[192,131]},
+
+  runA:{hd:[120,36],sh:[120,56],hp:[120,92],el:[100,70],ha:[112,56],er:[140,74],hr:[130,96],
+        kl:[104,108],fl:[96,122],kr:[136,112],fr:[146,128]},
+  runB:{hd:[120,36],sh:[120,56],hp:[120,92],el:[102,74],ha:[110,96],er:[138,70],hr:[128,56],
+        kl:[106,112],fl:[96,128],kr:[134,108],fr:[144,122]},
+
+  ropeDown:{hd:[120,38],sh:[120,58],hp:[120,92],el:[100,74],ha:[94,88],er:[140,74],hr:[146,88],
+            kl:[114,112],fl:[112,131],kr:[126,112],fr:[128,131]},
+  ropeUp:{hd:[120,30],sh:[120,50],hp:[120,84],el:[100,66],ha:[94,80],er:[140,66],hr:[146,80],
+          kl:[112,102],fl:[116,118],kr:[128,102],fr:[124,118]},
+
+  sitDown:{hd:[62,108],sh:[80,112],hp:[126,118],el:[70,124],ha:[56,120],er:[74,100],hr:[58,98],
+           kl:[152,98],fl:[170,128],kr:[156,100],fr:[174,130]},
+  sitUp:{hd:[108,70],sh:[108,92],hp:[126,118],el:[118,80],ha:[134,86],er:[120,74],hr:[138,80],
+         kl:[152,98],fl:[170,128],kr:[156,100],fr:[174,130]},
+
+  flexA:{hd:[120,36],sh:[120,58],hp:[120,94],el:[88,58],ha:[100,32],er:[152,58],hr:[140,32],
+         kl:[108,114],fl:[102,131],kr:[132,114],fr:[138,131]},
+  flexB:{hd:[120,42],sh:[120,64],hp:[120,98],el:[92,66],ha:[104,42],er:[148,66],hr:[136,42],
+         kl:[108,116],fl:[102,131],kr:[132,116],fr:[138,131]},
+
+  burpSquat:{hd:[116,72],sh:[116,90],hp:[114,106],el:[104,110],ha:[100,130],er:[130,110],hr:[128,130],
+             kl:[102,118],fl:[108,131],kr:[128,118],fr:[124,131]},
+  burpPlank:{hd:[70,86],sh:[86,92],hp:[134,100],el:[82,112],ha:[78,131],er:[90,112],hr:[86,131],
+             kl:[168,108],fl:[192,129],kr:[172,110],fr:[196,131]},
+  burpJump:{hd:[120,24],sh:[120,46],hp:[120,80],el:[104,28],ha:[96,8],er:[136,28],hr:[144,8],
+            kl:[112,98],fl:[108,114],kr:[128,98],fr:[132,114]}
+};
+
+/* Captions stay dry. The figure is being silly; the app isn't shouting. */
+const ROUTINES = [
+  {id:'jacks',cap:'warming up without you',period:760,
+   keys:[{t:0,p:'jacksShut'},{t:.5,p:'jacksOpen'},{t:1,p:'jacksShut'}]},
+  {id:'squats',cap:'demonstrating, patiently',period:1500,
+   keys:[{t:0,p:'squatUp'},{t:.42,p:'squatDown'},{t:.56,p:'squatDown'},{t:1,p:'squatUp'}]},
+  {id:'pushups',cap:'showing off a little',period:1400,
+   keys:[{t:0,p:'pushUp'},{t:.4,p:'pushDown'},{t:.52,p:'pushDown'},{t:1,p:'pushUp'}]},
+  {id:'running',cap:'lapping the living room',period:420,travel:5600,
+   keys:[{t:0,p:'runA'},{t:.5,p:'runB'},{t:1,p:'runA'}]},
+  {id:'jumprope',cap:'found a rope somewhere',period:700,rope:true,
+   keys:[{t:0,p:'ropeDown'},{t:.38,p:'ropeUp'},{t:.62,p:'ropeUp'},{t:1,p:'ropeDown'}]},
+  {id:'situps',cap:'already on the floor',period:1600,
+   keys:[{t:0,p:'sitDown'},{t:.4,p:'sitUp'},{t:.55,p:'sitUp'},{t:1,p:'sitDown'}]},
+  {id:'flex',cap:'posing. no notes.',period:1900,
+   keys:[{t:0,p:'flexA'},{t:.5,p:'flexB'},{t:1,p:'flexA'}]},
+  {id:'burpees',cap:'regretting the burpees',period:2300,
+   keys:[{t:0,p:'stand'},{t:.18,p:'burpSquat'},{t:.34,p:'burpPlank'},{t:.5,p:'burpPlank'},
+         {t:.66,p:'burpSquat'},{t:.82,p:'burpJump'},{t:1,p:'stand'}]}
+];
+
+const JOINTS=['hd','sh','hp','el','ha','er','hr','kl','fl','kr','fr'];
+const REDUCED = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function poseAt(r,phase){
+  const ks=r.keys;
+  for(let i=0;i<ks.length-1;i++){
+    if(phase>=ks[i].t && phase<=ks[i+1].t){
+      const span=ks[i+1].t-ks[i].t;
+      const k=span<=0?0:(phase-ks[i].t)/span;
+      // ease in-out, so it doesn't move like a machine
+      const e=k<.5 ? 2*k*k : 1-Math.pow(-2*k+2,2)/2;
+      const a=POSE[ks[i].p], b=POSE[ks[i+1].p], out={};
+      for(const j of JOINTS) out[j]=[a[j][0]+(b[j][0]-a[j][0])*e, a[j][1]+(b[j][1]-a[j][1])*e];
+      return out;
+    }
+  }
+  return POSE[ks[0].p];
+}
+
+let lastRoutine=null, stopMascot=null;
+
+function pickRoutine(){
+  const pool=ROUTINES.filter(r=>r.id!==lastRoutine);
+  const r=pool[Math.floor(Math.random()*pool.length)];
+  lastRoutine=r.id;
+  return r;
+}
+
+const MASCOT_SVG=`
+  <svg class="mascot" viewBox="0 0 240 150" aria-hidden="true">
+    <line class="m-ground" x1="10" y1="132" x2="230" y2="132"/>
+    <g id="m-fig">
+      <path class="m-rope" id="m-rope"/>
+      <circle class="m-stroke" id="m-head" r="13"/>
+      <path class="m-stroke" id="m-spine"/>
+      <path class="m-stroke" id="m-arml"/>
+      <path class="m-stroke" id="m-armr"/>
+      <path class="m-stroke" id="m-legl"/>
+      <path class="m-stroke" id="m-legr"/>
+    </g>
+  </svg>`;
+
+/* Animates into an already-rendered MASCOT_SVG. Only attributes are
+   touched in the loop — no innerHTML — so it stays cheap on a phone. */
+function runMascot(routine){
+  const q=id=>document.getElementById(id);
+  const head=q('m-head'),spine=q('m-spine'),armL=q('m-arml'),armR=q('m-armr'),
+        legL=q('m-legl'),legR=q('m-legr'),rope=q('m-rope'),fig=q('m-fig');
+  if(!head) return ()=>{};
+
+  const seg=(...pts)=>'M'+pts.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' L');
+
+  function draw(p,phase){
+    head.setAttribute('cx',p.hd[0].toFixed(1));
+    head.setAttribute('cy',p.hd[1].toFixed(1));
+    spine.setAttribute('d',seg(p.sh,p.hp));
+    armL.setAttribute('d',seg(p.sh,p.el,p.ha));
+    armR.setAttribute('d',seg(p.sh,p.er,p.hr));
+    legL.setAttribute('d',seg(p.hp,p.kl,p.fl));
+    legR.setAttribute('d',seg(p.hp,p.kr,p.fr));
+    if(routine.rope){
+      // A quadratic only bends halfway to its control point, so the control
+      // has to overshoot for the rope to clear the head and the feet.
+      const cy=72-Math.cos(phase*Math.PI*2)*150;
+      rope.setAttribute('d',`M${p.ha[0]},${p.ha[1]} Q120,${cy.toFixed(1)} ${p.hr[0]},${p.hr[1]}`);
+      rope.style.display='';
+    } else rope.style.display='none';
+  }
+
+  if(REDUCED){ draw(POSE.flexA,0); return ()=>{}; }
+
+  let raf=0, stopped=false;
+  function frame(now){
+    if(stopped) return;
+    const phase=(now%routine.period)/routine.period;
+    draw(poseAt(routine,phase),phase);
+    if(routine.travel){
+      // off one side, back the other way facing the right direction
+      const lap=Math.floor(now/routine.travel);
+      const tp=(now%routine.travel)/routine.travel;
+      const back=lap%2===1;
+      const x=back ? 310-tp*380 : -70+tp*380;
+      fig.setAttribute('transform', back
+        ? `translate(${x.toFixed(1)},0) translate(240,0) scale(-1,1)`
+        : `translate(${x.toFixed(1)},0)`);
+    }
+    raf=requestAnimationFrame(frame);
+  }
+  raf=requestAnimationFrame(frame);
+  return ()=>{stopped=true;cancelAnimationFrame(raf)};
+}
+
 /* ============ state ============ */
-const KEY='deck-state-v1';
-let S={streak:0,last:null,history:[],total:0};
+const KEY='deck-state-v1';   // key kept; the shape migrates in place
+const blank=()=>({v:2,streak:0,last:null,history:[],total:0,log:{},best:{}});
+let S=blank();
 let deck=[],idx=0,flipped=false,view='start',doneCount=0;
+let logVals=[];              // the current card's set values
 
 const today=()=>new Date().toLocaleDateString('en-CA');
 const daysBetween=(a,b)=>Math.round((new Date(b+'T00:00')-new Date(a+'T00:00'))/864e5);
@@ -289,6 +570,11 @@ async function load(){
     const raw=localStorage.getItem(KEY);
     if(raw) S=Object.assign(S,JSON.parse(raw));
   }catch(e){/* first run, or storage blocked — start fresh */}
+  // v1 saved no log or best; keep the streak and give it the new fields
+  if(!S.log) S.log={};
+  if(!S.best) S.best={};
+  if(!Array.isArray(S.history)) S.history=[];
+  S.v=2;
   if(S.last&&daysBetween(S.last,today())>1) S.streak=0;
   paintWeek();
   render();
@@ -296,6 +582,40 @@ async function load(){
 async function save(){
   try{ localStorage.setItem(KEY,JSON.stringify(S)); }
   catch(e){ console.error('Could not save progress',e); }
+}
+
+/* ---- logging ---- */
+const unit=e=>e.timed?'sec':'reps';
+const step=e=>e.timed?5:1;
+
+// Most recent logged session for an exercise, today's included.
+function lastEntry(id){
+  const rows=S.log[id];
+  return rows&&rows.length?rows[rows.length-1]:null;
+}
+
+// Prefill: last time's numbers with one more on the first set, which is
+// the whole point of logging — the deck should ask for a bit more.
+function prefill(e){
+  const prev=lastEntry(e.id);
+  if(!prev) return Array(e.sets).fill(e.start);
+  const out=[];
+  for(let i=0;i<e.sets;i++) out.push(prev.v[i]!=null?prev.v[i]:prev.v[prev.v.length-1]);
+  const complete=prev.v.length>=e.sets&&prev.v.every(n=>n>0);
+  if(complete) out[0]=out[0]+step(e);
+  return out;
+}
+
+function logSets(e,vals){
+  const v=vals.map(n=>Math.max(0,Math.round(n))).filter(n=>n>0);
+  if(!v.length) return;
+  const d=today();
+  const rows=S.log[e.id]||(S.log[e.id]=[]);
+  const i=rows.findIndex(r=>r.d===d);
+  if(i>=0) rows[i]={d,v}; else rows.push({d,v});
+  S.log[e.id]=rows.slice(-40);
+  const top=Math.max(...v);
+  if(!S.best[e.id]||top>S.best[e.id]) S.best[e.id]=top;
 }
 
 function paintWeek(){
@@ -320,7 +640,14 @@ function build(mode){
     used.add(pick.id);
     return pick;
   });
-  idx=0;flipped=false;doneCount=0;view='session';
+  doneCount=0;view='session';
+  setCard(0);
+}
+
+function setCard(i){
+  clearTimer();
+  idx=i; flipped=false;
+  logVals=prefill(deck[idx]);
   render();
 }
 
@@ -340,34 +667,78 @@ async function finish(){
 }
 
 function next(counted){
-  if(counted) doneCount++;
-  if(idx<deck.length-1){ idx++; flipped=false; render(); }
+  clearTimer();
+  if(counted){ logSets(deck[idx],logVals); doneCount++; save(); }
+  if(idx<deck.length-1) setCard(idx+1);
   else finish();
 }
 
 function extra(){
   const pool=EX.filter(e=>!deck.some(d=>d.id===e.id));
   deck.push(pool[Math.floor(Math.random()*pool.length)]||EX[0]);
-  idx=deck.length-1; flipped=false; view='session'; render();
+  view='session'; setCard(deck.length-1);
+}
+
+/* ============ hold timer ============ */
+let T={on:false,t0:0,slot:0,iv:null};
+const RING=2*Math.PI*31;
+
+function clearTimer(){ if(T.iv) clearInterval(T.iv); T={on:false,t0:0,slot:0,iv:null}; }
+
+function paintTimer(){
+  const e=deck[idx];
+  const num=document.getElementById('tnum'), fg=document.getElementById('tfg'),
+        wrap=document.getElementById('tring'), hint=document.getElementById('thint');
+  if(!num) return;
+  const secs=T.on?Math.floor((Date.now()-T.t0)/1000):0;
+  const target=e.target||60;
+  num.textContent=secs;
+  fg.setAttribute('stroke-dashoffset',(RING*(1-Math.min(1,secs/target))).toFixed(1));
+  wrap.classList.toggle('hit',secs>=target);
+  if(hint) hint.textContent=T.on
+    ? `Timing set ${T.slot+1}. Tap to stop.`
+    : `Tap to time set ${T.slot+1}. Target ${target}s, but stop when form goes.`;
+}
+
+function toggleTimer(){
+  const e=deck[idx];
+  if(!T.on){
+    T.on=true; T.t0=Date.now();
+    T.iv=setInterval(paintTimer,100);
+    paintTimer();
+  }else{
+    const secs=Math.round((Date.now()-T.t0)/1000);
+    clearInterval(T.iv); T.iv=null; T.on=false;
+    if(secs>0){ logVals[T.slot]=secs; T.slot=(T.slot+1)%e.sets; }
+    render();
+  }
 }
 
 /* ============ render ============ */
 const root=document.getElementById('root');
+const esc=s=>String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
 
 function render(){
+  if(stopMascot){ stopMascot(); stopMascot=null; }
   if(view==='start') return renderStart();
   if(view==='session') return renderCard();
+  if(view==='history') return renderHistory();
   renderDone();
 }
 
 function renderStart(){
+  const r=pickRoutine();
   const greeting = S.streak>0 ? `${S.streak} day${S.streak>1?'s':''} running.` : 'No deck yet this week.';
   root.innerHTML=`
     <div class="screen">
-      <div style="padding-top:52px">
+      <div style="padding-top:26px">
         <div class="eyebrow">${greeting}</div>
         <h1 style="margin-top:12px">How much<br>have you got?</h1>
-        <p class="lede">Pick a size before you think about it. A small deck still counts as a day.</p>
+        <p class="lede">Pick a size before you think about it. A small deck still counts.</p>
+      </div>
+      <div class="mascot-wrap">
+        ${MASCOT_SVG}
+        <div class="mascot-cap">${esc(r.cap)}</div>
       </div>
       <div class="modes">
         <button class="mode" data-mode="full">
@@ -386,11 +757,53 @@ function renderStart(){
           <span class="mode-sub">Do it, then close this · about 3 min</span></span>
         </button>
       </div>
-      ${S.total>0?`<button class="reset" id="reset">Clear my history</button>`:''}
+      <div class="footlinks">
+        <button class="linkbtn" id="hist">History</button>
+        ${S.total>0?`<button class="linkbtn" id="reset">Clear everything</button>`:'<span></span>'}
+      </div>
     </div>`;
+  stopMascot=runMascot(r);
   root.querySelectorAll('.mode').forEach(b=>b.onclick=()=>build(b.dataset.mode));
-  const r=root.querySelector('#reset');
-  if(r) r.onclick=async()=>{ S={streak:0,last:null,history:[],total:0}; await save(); paintWeek(); render(); };
+  root.querySelector('#hist').onclick=()=>{view='history';render()};
+  const rs=root.querySelector('#reset');
+  if(rs) rs.onclick=async()=>{
+    if(!confirm('Clear your streak and every logged set? This cannot be undone.')) return;
+    S=blank(); await save(); paintWeek(); render();
+  };
+}
+
+/* ---- card ---- */
+function lastHTML(e){
+  const prev=lastEntry(e.id), best=S.best[e.id];
+  if(!prev) return best?`<div class="lastline">best <b>${best}</b> ${unit(e)}</div>`:'';
+  const when=prev.d===today()?'today':'last time';
+  const complete=prev.v.length>=e.sets&&prev.v.every(n=>n>0);
+  const ask=complete?` — asking for <b>${logVals[0]}</b> on the first set`:'';
+  return `<div class="lastline">${when} ${prev.v.join(' · ')}${best?` · best <b>${best}</b>`:''}${ask}</div>`;
+}
+
+function timerHTML(e){
+  return `<div class="timer">
+    <button class="timer-ring" id="tring" aria-label="Start or stop the hold timer">
+      <svg viewBox="0 0 72 72" aria-hidden="true">
+        <circle class="tr-bg" cx="36" cy="36" r="31"/>
+        <circle class="tr-fg" id="tfg" cx="36" cy="36" r="31"
+                stroke-dasharray="${RING.toFixed(1)}" stroke-dashoffset="${RING.toFixed(1)}"/>
+      </svg>
+      <span class="timer-num" id="tnum">0</span>
+    </button>
+    <div class="timer-hint" id="thint">Tap to time set ${T.slot+1}. Target ${e.target}s, but stop when form goes.</div>
+  </div>`;
+}
+
+function chipsHTML(e){
+  return `<div class="sets-label">${e.timed?'seconds held':'reps'} · ${e.sets} sets</div>
+    <div class="sets" id="sets">${logVals.map((n,i)=>`
+      <div class="chip${n<=0?' zero':''}">
+        <button data-i="${i}" data-d="-1" aria-label="Fewer on set ${i+1}">&minus;</button>
+        <b>${n}</b>
+        <button data-i="${i}" data-d="1" aria-label="More on set ${i+1}">+</button>
+      </div>`).join('')}</div>`;
 }
 
 function renderCard(){
@@ -401,17 +814,24 @@ function renderCard(){
     <div class="screen">
       <div class="progress">${pips}</div>
       <div class="card-wrap">
-        <div class="card ${flipped?'flipped':''}" id="card" role="button" tabindex="0" aria-label="Flip card for form cue">
+        <div class="card ${flipped?'flipped':''}" id="card">
           <div class="face front">
-            <div class="tag">${e.group} · card ${idx+1} of ${deck.length}</div>
-            <figure><svg class="fig" viewBox="0 0 220 132" aria-hidden="true">${F[e.fig]}</svg></figure>
-            <div class="ex-name">${e.name}</div>
-            <div class="dose">${e.dose}</div>
-            <div class="flip-hint">Tap for the one thing that matters</div>
+            <div class="flipzone" id="flipzone" role="button" tabindex="0" aria-label="Flip card for the form cue">
+              <div class="tag-row">
+                <div class="tag">${e.group} · card ${idx+1} of ${deck.length}</div>
+                <div class="hint">tap to flip</div>
+              </div>
+              <figure><svg class="fig" viewBox="0 0 220 132" aria-hidden="true">${F[e.fig]}</svg></figure>
+              <div class="ex-name">${esc(e.name)}</div>
+              <div class="dose">${e.dose}</div>
+              ${lastHTML(e)}
+            </div>
+            ${e.timed?timerHTML(e):''}
+            ${chipsHTML(e)}
           </div>
-          <div class="face back">
+          <div class="face back" id="backface" role="button" tabindex="0">
             <div class="tag">form cue</div>
-            <div class="cue">${e.cue}</div>
+            <div class="cue">${esc(e.cue)}</div>
             <div class="back-note">Stop a rep or two short of failure. You want to be able to do this again tomorrow.</div>
           </div>
         </div>
@@ -421,10 +841,29 @@ function renderCard(){
         <button class="btn solid" id="done">${last?'Finish deck':'Done — next'}</button>
       </div>
     </div>`;
-  const c=root.querySelector('#card');
-  const flip=()=>{flipped=!flipped;c.classList.toggle('flipped',flipped)};
-  c.onclick=flip;
-  c.onkeydown=ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();flip()}};
+
+  const card=root.querySelector('#card');
+  const flip=()=>{flipped=!flipped;card.classList.toggle('flipped',flipped)};
+  const key=ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();flip()}};
+  const fz=root.querySelector('#flipzone'), bf=root.querySelector('#backface');
+  fz.onclick=flip; fz.onkeydown=key;
+  bf.onclick=flip; bf.onkeydown=key;
+
+  // Chips nudge the value in place rather than re-rendering, so a running
+  // timer doesn't flicker and the card doesn't jump under your thumb.
+  root.querySelector('#sets').onclick=ev=>{
+    const b=ev.target.closest('button'); if(!b) return;
+    const i=+b.dataset.i;
+    logVals[i]=Math.max(0,logVals[i]+(+b.dataset.d)*step(e));
+    const chip=b.parentElement;
+    chip.querySelector('b').textContent=logVals[i];
+    chip.classList.toggle('zero',logVals[i]<=0);
+  };
+
+  if(e.timed){
+    root.querySelector('#tring').onclick=toggleTimer;
+    paintTimer();
+  }
   root.querySelector('#skip').onclick=()=>next(false);
   root.querySelector('#done').onclick=()=>next(true);
 }
@@ -449,6 +888,79 @@ function renderDone(){
   root.querySelector('#more').onclick=extra;
   root.querySelector('#close').onclick=()=>{view='start';render()};
 }
+
+/* ---- history ---- */
+function calCells(){
+  const t=new Date(); t.setHours(0,0,0,0);
+  const dow=(t.getDay()+6)%7;                 // Monday-first
+  const end=new Date(t); end.setDate(end.getDate()-dow+6);
+  const start=new Date(end); start.setDate(start.getDate()-62);
+  const out=[];
+  for(const d=new Date(start); d<=end; d.setDate(d.getDate()+1)){
+    const k=d.toLocaleDateString('en-CA');
+    out.push(`<i class="${S.history.includes(k)?'on':''}${d>t?' future':''}"></i>`);
+  }
+  return out.join('');
+}
+
+function spark(vals){
+  if(vals.length<2) return '<span class="spark"></span>';
+  const w=56,h=20,p=3;
+  const mn=Math.min(...vals), mx=Math.max(...vals), rng=(mx-mn)||1;
+  const pts=vals.map((v,i)=>[
+    p+i*(w-2*p)/(vals.length-1),
+    h-p-((v-mn)/rng)*(h-2*p)
+  ]);
+  return `<svg class="spark" viewBox="0 0 ${w} ${h}" aria-hidden="true"><path d="M${
+    pts.map(q=>q[0].toFixed(1)+','+q[1].toFixed(1)).join(' L')}"/></svg>`;
+}
+
+function renderHistory(){
+  const logged=EX.filter(e=>S.log[e.id]&&S.log[e.id].length)
+    .sort((a,b)=>S.log[b.id][S.log[b.id].length-1].d.localeCompare(S.log[a.id][S.log[a.id].length-1].d));
+
+  const rows=logged.map(e=>{
+    const entries=S.log[e.id];
+    const maxes=entries.slice(-8).map(r=>Math.max(...r.v));
+    const prev=entries[entries.length-1];
+    return `<div class="exrow">
+      <div class="exname">${esc(e.name)}</div>
+      <div class="exlast">${prev.v.join(' · ')}</div>
+      ${spark(maxes)}
+      <div class="exbest">${S.best[e.id]}</div>
+    </div>`;
+  }).join('');
+
+  root.innerHTML=`
+    <div class="screen">
+      <div class="footlinks" style="margin-top:0">
+        <button class="linkbtn" id="back">&larr; Back</button>
+        <span class="eyebrow">history</span>
+      </div>
+      <div class="scroll">
+        <div class="stat-row">
+          <div class="stat"><b>${S.total}</b><span>sessions</span></div>
+          <div class="stat"><b>${S.streak}</b><span>day streak</span></div>
+          <div class="stat"><b>${S.history.length}</b><span>days logged</span></div>
+        </div>
+        <div class="cal">${calCells()}</div>
+        ${logged.length
+          ? `<div style="margin-top:22px">
+               <div class="sets-label" style="margin-top:0">what moved · best on the right</div>
+               <div style="margin-top:4px">${rows}</div>
+             </div>`
+          : `<p class="empty">Nothing logged yet. Tap the numbers on a card as you go and this fills up on its own — the line shows your best set each session.</p>`}
+      </div>
+    </div>`;
+  root.querySelector('#back').onclick=()=>{view='start';render()};
+}
+
+/* Pause the figure when the app is backgrounded; on return, the start
+   screen re-renders and deals a fresh routine. */
+document.addEventListener('visibilitychange',()=>{
+  if(document.hidden){ if(stopMascot){stopMascot();stopMascot=null;} }
+  else if(view==='start') render();
+});
 
 load();
 </script>
