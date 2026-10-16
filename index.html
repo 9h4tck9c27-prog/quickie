@@ -482,7 +482,7 @@ function poseAt(r,phase){
   return POSE[ks[0].p];
 }
 
-let lastRoutine=null, stopMascot=null;
+let lastRoutine=null, stopMascot=null, routine=null;
 
 function pickRoutine(){
   const pool=ROUTINES.filter(r=>r.id!==lastRoutine);
@@ -727,7 +727,7 @@ function render(){
 }
 
 function renderStart(){
-  const r=pickRoutine();
+  const r=routine=pickRoutine();
   const greeting = S.streak>0 ? `${S.streak} day${S.streak>1?'s':''} running.` : 'No deck yet this week.';
   root.innerHTML=`
     <div class="screen">
@@ -955,11 +955,21 @@ function renderHistory(){
   root.querySelector('#back').onclick=()=>{view='start';render()};
 }
 
-/* Pause the figure when the app is backgrounded; on return, the start
-   screen re-renders and deals a fresh routine. */
+/* Pause the figure while the app is backgrounded. Coming back from a
+   glance just resumes it — re-rendering would flash the screen and swap
+   the routine under you. Coming back after a while counts as opening the
+   app again, so it deals a fresh one. */
+const GLANCE=90e3;
+let hiddenAt=0;
 document.addEventListener('visibilitychange',()=>{
-  if(document.hidden){ if(stopMascot){stopMascot();stopMascot=null;} }
-  else if(view==='start') render();
+  if(document.hidden){
+    hiddenAt=Date.now();
+    if(stopMascot){stopMascot();stopMascot=null;}
+    return;
+  }
+  if(view!=='start') return;
+  if(Date.now()-hiddenAt>GLANCE) render();
+  else if(!stopMascot&&routine&&document.getElementById('m-fig')) stopMascot=runMascot(routine);
 });
 
 load();
