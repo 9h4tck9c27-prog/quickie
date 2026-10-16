@@ -1,0 +1,20 @@
+[build]
+  publish = "."
+  command = ""
+
+# Static single-page app — nothing to build, just serve index.html.
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# index.html must never be cached, or the phone keeps serving an old deck
+# after a deploy. The fonts it pulls from Google are cached by the browser
+# anyway, so there is nothing else here worth a long TTL.
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
