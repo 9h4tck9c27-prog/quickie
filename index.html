@@ -124,8 +124,11 @@
   /* ---------- mascot ---------- */
   /* The flexible element: everything else takes the height it needs and the
      figure absorbs whatever is left, so the screen never has to scroll. */
+  /* Capped so it can only absorb a little of the spare height — the rest
+     falls past the buttons to the bottom of the screen, lifting them. An
+     uncapped flex:1 here swallows everything and pins them to the edge. */
   .mascot-wrap{
-    flex:1 1 auto; min-height:62px;
+    flex:1 1 auto; min-height:62px; max-height:186px;
     margin-top:4px;
     display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
   }
