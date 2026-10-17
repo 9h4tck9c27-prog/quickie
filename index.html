@@ -71,8 +71,14 @@
     padding-top:max(62px, calc(env(safe-area-inset-top) + 8px));
   }
 
+  /* #root is the flex child that carries the screen's height down to it.
+     Without this it's a plain block sized to its content, .screen's flex:1
+     resolves against nothing, and the layout either overflows a short phone
+     or leaves dead space under a tall one. */
+  #root{flex:1 1 auto;min-height:0;display:flex;flex-direction:column}
+
   /* ---------- header ---------- */
-  .top{display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex:none}
   .wordmark{
     font-family:'Bricolage Grotesque',sans-serif;
     font-weight:800; font-size:15px; letter-spacing:-.02em;
@@ -108,7 +114,7 @@
 
   /* ---------- start screen ---------- */
   .lede{margin-top:10px;color:var(--dim);font-size:14px;line-height:1.45;max-width:32ch}
-  .modes{padding-top:12px;display:flex;flex-direction:column;gap:8px;flex:none}
+  .modes{margin-top:auto;padding-top:12px;display:flex;flex-direction:column;gap:8px;flex:none}
 
   /* ---------- mascot ---------- */
   /* The flexible element: everything else takes the height it needs and the
@@ -120,7 +126,7 @@
   }
   .mascot{
     flex:1 1 auto; min-height:0;
-    width:100%;max-width:272px;max-height:162px;
+    width:100%;max-width:300px;max-height:196px;
     display:block;overflow:visible;
   }
   .m-stroke{fill:none;stroke:var(--chalk);stroke-width:4.2;stroke-linecap:round;stroke-linejoin:round}
