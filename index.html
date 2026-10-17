@@ -126,7 +126,7 @@
   }
   .mascot{
     flex:1 1 auto; min-height:0;
-    width:100%;max-width:300px;max-height:196px;
+    width:100%;max-width:340px;max-height:232px;
     display:block;overflow:visible;
   }
   .m-stroke{fill:none;stroke:var(--chalk);stroke-width:4.2;stroke-linecap:round;stroke-linejoin:round}
@@ -578,6 +578,12 @@ function runMascot(routine){
   }
 
   if(REDUCED){ draw(POSE.flexA,0); return ()=>{}; }
+
+  /* Paint frame zero synchronously. Until a rAF fires the circle and paths
+     hold their initial attributes, which draws a stray dot at the origin —
+     a visible flash on launch, and a permanently blank figure if the page
+     loaded while hidden, since rAF doesn't run there. */
+  draw(poseAt(routine,0),0);
 
   let raf=0, stopped=false;
   function frame(now){
