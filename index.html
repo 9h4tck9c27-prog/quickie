@@ -62,13 +62,15 @@
   }
 
   /* Installed to the home screen, iOS draws the page under a translucent
-     status bar but often reports env(safe-area-inset-top) as 0, so the inset
-     alone can't be trusted to clear the clock. The floor covers the tallest
-     status bar (Dynamic Island, ~62px); where the inset does report, max()
-     still wins. `under-statusbar` is set at runtime by measuring whether the
-     page actually fills the screen, so an opaque bar doesn't get padded twice. */
-  html.under-statusbar .app{
-    padding-top:max(62px, calc(env(safe-area-inset-top) + 8px));
+     status bar but reports env(safe-area-inset-top) as 0, so the inset can't
+     be trusted to clear the clock. This floor clears the tallest status bar
+     (Dynamic Island, ~62px) with room to spare; where the inset does report,
+     max() still wins. Deliberately ungated — an earlier version only applied
+     it when a screen-height measurement agreed, and when that measurement was
+     wrong the padding collapsed to 18px and the header went under the clock.
+     A little extra padding is a cosmetic nit; too little is the bug. */
+  html.standalone .app{
+    padding-top:max(76px, calc(env(safe-area-inset-top) + 16px));
   }
 
   /* #root is the flex child that carries the screen's height down to it.
@@ -114,19 +116,22 @@
 
   /* ---------- start screen ---------- */
   .lede{margin-top:10px;color:var(--dim);font-size:14px;line-height:1.45;max-width:32ch}
-  .modes{margin-top:auto;padding-top:12px;display:flex;flex-direction:column;gap:8px;flex:none}
+  /* Deliberately not pinned to the bottom: with the figure capped small the
+     leftover height falls below the buttons, lifting them off the bottom
+     edge and into easier thumb reach. */
+  .modes{padding-top:10px;display:flex;flex-direction:column;gap:8px;flex:none}
 
   /* ---------- mascot ---------- */
   /* The flexible element: everything else takes the height it needs and the
      figure absorbs whatever is left, so the screen never has to scroll. */
   .mascot-wrap{
-    flex:1 1 auto; min-height:76px;
-    margin-top:8px;
+    flex:1 1 auto; min-height:62px;
+    margin-top:4px;
     display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
   }
   .mascot{
     flex:1 1 auto; min-height:0;
-    width:100%;max-width:340px;max-height:232px;
+    width:100%;max-width:236px;max-height:148px;
     display:block;overflow:visible;
   }
   .m-stroke{fill:none;stroke:var(--chalk);stroke-width:4.2;stroke-linecap:round;stroke-linejoin:round}
@@ -313,21 +318,19 @@
   }
 </style>
 <script>
-  /* Runs in <head> so the header never paints at the wrong height. */
+  /* Runs in <head> so the header never paints at the wrong height.
+     Any one of these signals is enough: they are OR'd, never AND'd, so a
+     single unreliable reading can't collapse the padding and tuck the
+     header under the status bar. */
   (function () {
-    var standalone = navigator.standalone === true ||
-      (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches);
-    if (!standalone) return;
-    document.documentElement.classList.add('standalone');
-    /* A translucent status bar means the page fills the whole screen; an
-       opaque one means iOS has already reserved that strip and innerHeight
-       comes up short. Measuring beats trusting env(), which reports 0 here. */
+    var flagged = false, fillsScreen = false;
     try {
-      if (window.innerHeight >= screen.height - 12) {
-        document.documentElement.classList.add('under-statusbar');
-      }
-    } catch (e) {
-      document.documentElement.classList.add('under-statusbar');
+      flagged = navigator.standalone === true ||
+        (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches);
+    } catch (e) {}
+    try { fillsScreen = window.innerHeight >= screen.height - 20; } catch (e) {}
+    if (flagged || fillsScreen) {
+      document.documentElement.classList.add('standalone');
     }
   })();
 </script>
