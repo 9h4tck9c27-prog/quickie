@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Tonight's Deck</title>
-<meta name="description" content="A short deck of bodyweight and dumbbell exercises for when you're too tapped out to leave the house.">
+<title>Quickies</title>
+<meta name="description" content="Short bodyweight and dumbbell workouts for when you're too tapped out to leave the house.">
 <meta name="theme-color" content="#14141F">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Tonight">
+<meta name="apple-mobile-web-app-title" content="Quickies">
 <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png">
 <link rel="manifest" href="/manifest.webmanifest">
@@ -49,15 +49,22 @@
   .app{
     width:100%; max-width:460px;
     min-height:100dvh;
-    /* Installed to the home screen, iOS runs this under a translucent status
-       bar, so the top inset is what keeps the header clear of the clock and
-       the notch. max() keeps a sane 20px on devices reporting no inset. */
     padding-top:max(20px, calc(env(safe-area-inset-top) + 8px));
     padding-right:calc(20px + env(safe-area-inset-right));
     padding-bottom:calc(20px + env(safe-area-inset-bottom));
     padding-left:calc(20px + env(safe-area-inset-left));
     display:flex; flex-direction:column;
     position:relative; z-index:1;
+  }
+
+  /* Installed to the home screen, iOS draws the page under a translucent
+     status bar but often reports env(safe-area-inset-top) as 0, so the inset
+     alone can't be trusted to clear the clock. The floor below covers the
+     tallest status bar (Dynamic Island, ~62px); where the inset does report,
+     max() still wins and the header sits where it should. The class is set
+     from JS because older iOS predates the display-mode media query. */
+  html.standalone .app{
+    padding-top:max(62px, calc(env(safe-area-inset-top) + 8px));
   }
 
   /* ---------- header ---------- */
@@ -286,6 +293,13 @@
     .card:not(.flipped) .face.back{display:none}
   }
 </style>
+<script>
+  /* Runs in <head> so the header never paints at the wrong height. */
+  if (navigator.standalone === true ||
+      (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches)) {
+    document.documentElement.classList.add('standalone');
+  }
+</script>
 </head>
 <body>
 
@@ -298,7 +312,7 @@
 
 <div class="app">
   <div class="top">
-    <div class="wordmark">tonight<span>.</span></div>
+    <div class="wordmark">quickies<span>.</span></div>
     <div class="week" id="week" aria-label="Last seven days"></div>
   </div>
   <div id="root"></div>
@@ -733,8 +747,8 @@ function renderStart(){
     <div class="screen">
       <div style="padding-top:26px">
         <div class="eyebrow">${greeting}</div>
-        <h1 style="margin-top:12px">How much<br>have you got?</h1>
-        <p class="lede">Pick a size before you think about it. A small deck still counts.</p>
+        <h1 style="margin-top:12px">Pick a quick<br>workout</h1>
+        <p class="lede">Choose a size before you think about it. A small one still counts.</p>
       </div>
       <div class="mascot-wrap">
         ${MASCOT_SVG}

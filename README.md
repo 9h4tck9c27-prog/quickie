@@ -1,7 +1,7 @@
-# Tonight's Deck
+# Quickies
 
-A short deck of bodyweight and dumbbell exercises, built for the evenings when
-leaving the house is the thing standing between you and a workout.
+Short bodyweight and dumbbell workouts, built for the evenings when leaving the
+house is the thing standing between you and training.
 
 Live at **https://tonights-deck.netlify.app**
 
@@ -96,6 +96,19 @@ git push
 Open the site in Safari or Chrome, then Share → Add to Home Screen. The app
 metadata in `<head>` makes it launch fullscreen with its own icon and no
 browser chrome, so the gap between the thought and the first push-up is one tap.
+
+The home screen **name and icon are cached by iOS at install time**, so after
+changing either you have to delete the home screen app and re-add it.
+
+### The status bar
+
+Installed on iOS, the page runs under a translucent status bar — and in that
+mode iOS frequently reports `env(safe-area-inset-top)` as `0`, so padding
+derived from the inset alone lets the header slide under the clock. A
+`html.standalone` class (set from `<head>`, since older iOS predates the
+`display-mode` media query) applies a 62px floor that clears the tallest status
+bar. Test this by installing to a home screen, not in Safari — Safari reports
+the inset correctly and hides the bug.
 
 ## Note
 

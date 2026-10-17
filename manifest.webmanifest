@@ -1,7 +1,7 @@
 {
-  "name": "Tonight's Deck",
-  "short_name": "Tonight",
-  "description": "A short deck of bodyweight and dumbbell exercises for when you're too tapped out to leave the house.",
+  "name": "Quickies",
+  "short_name": "Quickies",
+  "description": "Short bodyweight and dumbbell workouts for when you're too tapped out to leave the house.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
