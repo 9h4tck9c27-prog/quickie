@@ -38,6 +38,9 @@
     display:flex;
     justify-content:center;
     overflow-x:hidden;
+    /* Stops the rubber-band bounce dragging the header up under the
+       translucent status bar, which blurs whatever passes beneath it. */
+    overscroll-behavior:none;
   }
   body::before{
     content:'';
@@ -48,22 +51,23 @@
 
   .app{
     width:100%; max-width:460px;
-    min-height:100dvh;
-    padding-top:max(20px, calc(env(safe-area-inset-top) + 8px));
-    padding-right:calc(20px + env(safe-area-inset-right));
-    padding-bottom:calc(20px + env(safe-area-inset-bottom));
-    padding-left:calc(20px + env(safe-area-inset-left));
+    height:100dvh;
+    padding-top:max(18px, calc(env(safe-area-inset-top) + 8px));
+    padding-right:calc(18px + env(safe-area-inset-right));
+    padding-bottom:calc(16px + env(safe-area-inset-bottom));
+    padding-left:calc(18px + env(safe-area-inset-left));
     display:flex; flex-direction:column;
     position:relative; z-index:1;
+    overflow:hidden;
   }
 
   /* Installed to the home screen, iOS draws the page under a translucent
      status bar but often reports env(safe-area-inset-top) as 0, so the inset
-     alone can't be trusted to clear the clock. The floor below covers the
-     tallest status bar (Dynamic Island, ~62px); where the inset does report,
-     max() still wins and the header sits where it should. The class is set
-     from JS because older iOS predates the display-mode media query. */
-  html.standalone .app{
+     alone can't be trusted to clear the clock. The floor covers the tallest
+     status bar (Dynamic Island, ~62px); where the inset does report, max()
+     still wins. `under-statusbar` is set at runtime by measuring whether the
+     page actually fills the screen, so an opaque bar doesn't get padded twice. */
+  html.under-statusbar .app{
     padding-top:max(62px, calc(env(safe-area-inset-top) + 8px));
   }
 
@@ -84,7 +88,7 @@
   .day.today{box-shadow:0 0 0 1.5px rgba(155,140,232,.55)}
 
   /* ---------- shared ---------- */
-  .screen{flex:1;display:flex;flex-direction:column;animation:rise .45s cubic-bezier(.2,.7,.3,1)}
+  .screen{flex:1;min-height:0;display:flex;flex-direction:column;animation:rise .45s cubic-bezier(.2,.7,.3,1)}
   @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 
   .eyebrow{
@@ -96,31 +100,39 @@
   h1{
     font-family:'Bricolage Grotesque',sans-serif;
     font-weight:800; letter-spacing:-.035em; line-height:.98;
-    font-size:clamp(38px,12vw,50px);
+    font-size:clamp(30px,8.8vw,40px);
   }
 
   button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
   button:focus-visible{outline:2px solid var(--lilac);outline-offset:3px;border-radius:6px}
 
   /* ---------- start screen ---------- */
-  .lede{margin-top:16px;color:var(--dim);font-size:15px;line-height:1.5;max-width:30ch}
-  .modes{margin-top:auto;padding-top:24px;display:flex;flex-direction:column;gap:10px}
+  .lede{margin-top:10px;color:var(--dim);font-size:14px;line-height:1.45;max-width:32ch}
+  .modes{padding-top:12px;display:flex;flex-direction:column;gap:8px;flex:none}
 
   /* ---------- mascot ---------- */
+  /* The flexible element: everything else takes the height it needs and the
+     figure absorbs whatever is left, so the screen never has to scroll. */
   .mascot-wrap{
-    margin-top:14px;display:flex;flex-direction:column;align-items:center;gap:6px;
-    min-height:150px;justify-content:center;
+    flex:1 1 auto; min-height:76px;
+    margin-top:8px;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
   }
-  .mascot{width:100%;max-width:290px;height:auto;display:block;overflow:visible}
+  .mascot{
+    flex:1 1 auto; min-height:0;
+    width:100%;max-width:272px;max-height:162px;
+    display:block;overflow:visible;
+  }
   .m-stroke{fill:none;stroke:var(--chalk);stroke-width:4.2;stroke-linecap:round;stroke-linejoin:round}
   .m-rope{fill:none;stroke:var(--lilac);stroke-width:2.4;stroke-linecap:round;opacity:.85}
   .m-ground{stroke:var(--dim);stroke-width:2;opacity:.35;stroke-linecap:round}
   .mascot-cap{
+    flex:none;
     font-family:'JetBrains Mono',monospace;font-size:10.5px;
     letter-spacing:.13em;color:var(--dim);
   }
 
-  .footlinks{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:14px}
+  .footlinks{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:10px;flex:none}
   .linkbtn{
     font-size:11.5px;color:var(--dim);
     text-decoration:underline;text-underline-offset:3px;
@@ -128,30 +140,30 @@
   .linkbtn:hover{color:var(--chalk)}
 
   .mode{
-    display:flex;align-items:baseline;gap:14px;
+    display:flex;align-items:baseline;gap:13px;
     width:100%; text-align:left;
-    padding:18px 18px;
+    padding:13px 16px;
     background:var(--slate);
     border:1px solid var(--line);
-    border-radius:14px;
+    border-radius:13px;
     transition:transform .18s ease, border-color .18s ease, background .18s ease;
   }
   .mode:hover,.mode:focus-visible{background:var(--slate-2);border-color:rgba(155,140,232,.4);transform:translateY(-2px)}
   .mode:active{transform:translateY(0)}
   .mode-n{
     font-family:'JetBrains Mono',monospace;font-weight:700;
-    font-size:19px;color:var(--lilac);min-width:26px;
+    font-size:17px;color:var(--lilac);min-width:22px;
   }
-  .mode-name{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:18px;letter-spacing:-.02em}
-  .mode-sub{display:block;margin-top:3px;color:var(--dim);font-size:12.5px;font-weight:400;letter-spacing:0}
+  .mode-name{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:16.5px;letter-spacing:-.02em}
+  .mode-sub{display:block;margin-top:2px;color:var(--dim);font-size:12px;font-weight:400;letter-spacing:0}
 
   /* ---------- card ---------- */
-  .progress{display:flex;gap:4px;margin:22px 0 16px}
+  .progress{display:flex;gap:4px;margin:14px 0 12px;flex:none}
   .pip{flex:1;height:3px;border-radius:2px;background:rgba(230,233,242,.13)}
   .pip.done{background:var(--sage)}
   .pip.now{background:var(--lilac)}
 
-  .card-wrap{perspective:1400px;flex:1;min-height:430px;display:flex}
+  .card-wrap{perspective:1400px;flex:1 1 auto;min-height:0;display:flex}
   .card{
     position:relative;width:100%;
     transform-style:preserve-3d;
@@ -165,8 +177,9 @@
     background:var(--slate);
     border:1px solid var(--line);
     border-radius:20px;
-    padding:22px;
+    padding:18px;
     display:flex;flex-direction:column;
+    overflow:hidden;
   }
   .face.back{transform:rotateY(180deg);background:var(--slate-2)}
 
@@ -257,9 +270,9 @@
   .spark path{fill:none;stroke:var(--lilac);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
   .empty{color:var(--dim);font-size:14px;line-height:1.55;margin-top:20px;max-width:32ch}
 
-  .actions{display:flex;gap:10px;margin-top:16px}
+  .actions{display:flex;gap:10px;margin-top:12px;flex:none}
   .btn{
-    flex:1;padding:16px;border-radius:13px;
+    flex:1;padding:14px;border-radius:13px;
     font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:16px;letter-spacing:-.01em;
     border:1px solid var(--line);
     transition:transform .16s ease,background .16s ease,border-color .16s ease;
@@ -295,10 +308,22 @@
 </style>
 <script>
   /* Runs in <head> so the header never paints at the wrong height. */
-  if (navigator.standalone === true ||
-      (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches)) {
+  (function () {
+    var standalone = navigator.standalone === true ||
+      (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches);
+    if (!standalone) return;
     document.documentElement.classList.add('standalone');
-  }
+    /* A translucent status bar means the page fills the whole screen; an
+       opaque one means iOS has already reserved that strip and innerHeight
+       comes up short. Measuring beats trusting env(), which reports 0 here. */
+    try {
+      if (window.innerHeight >= screen.height - 12) {
+        document.documentElement.classList.add('under-statusbar');
+      }
+    } catch (e) {
+      document.documentElement.classList.add('under-statusbar');
+    }
+  })();
 </script>
 </head>
 <body>
@@ -745,9 +770,9 @@ function renderStart(){
   const greeting = S.streak>0 ? `${S.streak} day${S.streak>1?'s':''} running.` : 'No deck yet this week.';
   root.innerHTML=`
     <div class="screen">
-      <div style="padding-top:26px">
+      <div style="padding-top:14px;flex:none">
         <div class="eyebrow">${greeting}</div>
-        <h1 style="margin-top:12px">Pick a quick<br>workout</h1>
+        <h1 style="margin-top:10px">Pick a quick<br>workout</h1>
         <p class="lede">Choose a size before you think about it. A small one still counts.</p>
       </div>
       <div class="mascot-wrap">
